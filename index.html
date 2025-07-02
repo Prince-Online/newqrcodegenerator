@@ -1,0 +1,733 @@
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Professional UPI QR Code Generator</title>
+<meta name="description" content="Generate professional UPI payment QR codes instantly with premium design">
+<meta name="theme-color" content="#4ecdc4">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/png" sizes="192x192" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTkyIiBoZWlnaHQ9IjE5MiIgdmlld0JveD0iMCAwIDE5MiAxOTIiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJhIiB4MT0iMCIgeTE9IjAiIHgyPSIxOTIiIHkyPSIxOTIiPjxzdG9wIHN0b3AtY29sb3I9IiNmZjZiNmIiLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiM0ZWNkYzQiLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48Y2lyY2xlIGN4PSI5NiIgY3k9Ijk2IiByPSI5NiIgZmlsbD0idXJsKCNhKSIvPjx0ZXh0IHg9Ijk2IiB5PSIxMTAiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSI0OCIgZm9udC13ZWlnaHQ9IjkwMCIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiPlBNPC90ZXh0Pjwvc3ZnPg==">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 35%, #667eea 100%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    position: relative;
+    overflow-x: hidden;
+}
+
+body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 107, 107, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(78, 205, 196, 0.3) 0%, transparent 50%);
+    pointer-events: none;
+}
+
+.container {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(25px);
+    border-radius: 24px;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(255, 255, 255, 0.2);
+    padding: 50px;
+    width: 100%;
+    max-width: 520px;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+}
+
+.container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+    border-radius: 24px;
+    pointer-events: none;
+}
+
+.header {
+    margin-bottom: 45px;
+    position: relative;
+}
+
+.logo {
+    width: 90px;
+    height: 90px;
+    background: linear-gradient(135deg, #ff6b6b 0%, #4ecdc4 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 25px;
+    font-size: 28px;
+    font-weight: 900;
+    color: white;
+    text-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2), 0 0 0 4px rgba(255, 255, 255, 0.1);
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.logo::after {
+    content: '';
+    position: absolute;
+    top: -4px;
+    left: -4px;
+    right: -4px;
+    bottom: -4px;
+    background: linear-gradient(135deg, #ff6b6b, #4ecdc4);
+    border-radius: 50%;
+    z-index: -1;
+    opacity: 0.3;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 0.3; }
+    50% { transform: scale(1.1); opacity: 0.5; }
+}
+
+h1 {
+    color: #1a202c;
+    font-size: 32px;
+    font-weight: 800;
+    margin-bottom: 12px;
+    background: linear-gradient(135deg, #1a202c 0%, #4a5568 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.subtitle {
+    color: #718096;
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 25px;
+    line-height: 1.5;
+}
+
+.form-group {
+    margin-bottom: 30px;
+    text-align: left;
+    position: relative;
+}
+
+label {
+    display: block;
+    margin-bottom: 10px;
+    color: #2d3748;
+    font-weight: 700;
+    font-size: 15px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+select, input {
+    width: 100%;
+    padding: 18px 20px;
+    border: 2px solid #e2e8f0;
+    border-radius: 16px;
+    font-size: 16px;
+    font-weight: 500;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+select:focus, input:focus {
+    outline: none;
+    border-color: #4ecdc4;
+    box-shadow: 0 0 0 4px rgba(78, 205, 196, 0.15), 0 8px 25px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+}
+
+.generate-btn {
+    background: linear-gradient(135deg, #ff6b6b 0%, #4ecdc4 100%);
+    color: white;
+    border: none;
+    padding: 18px 45px;
+    border-radius: 16px;
+    font-size: 18px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 15px 35px rgba(255, 107, 107, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.generate-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
+}
+
+.generate-btn:hover::before {
+    left: 100%;
+}
+
+.generate-btn:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 45px rgba(255, 107, 107, 0.4);
+}
+
+.generate-btn:active {
+    transform: translateY(-2px);
+}
+
+.qr-section {
+    margin-top: 50px;
+    display: none;
+}
+
+.qr-container {
+    background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
+    border-radius: 28px;
+    padding: 40px;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15), 
+                inset 0 1px 0 rgba(255, 255, 255, 0.6),
+                0 0 0 1px rgba(255, 255, 255, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+.qr-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 80px;
+    background: linear-gradient(135deg, #ff6b6b 0%, #4ecdc4 100%);
+    border-radius: 28px 28px 0 0;
+}
+
+.qr-container::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 80px;
+    background: radial-gradient(circle at center, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
+    border-radius: 28px 28px 0 0;
+}
+
+.qr-header {
+    position: relative;
+    z-index: 3;
+    margin-bottom: 25px;
+    padding-top: 30px;
+}
+
+.qr-logo {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, #ff6b6b 0%, #4ecdc4 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    font-size: 18px;
+    font-weight: 900;
+    color: white;
+    position: absolute;
+    top: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 4px solid white;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    z-index: 4;
+}
+
+.merchant-name {
+    color: #1a202c;
+    font-size: 22px;
+    font-weight: 800;
+    margin: 35px 0 15px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.amount-display {
+    background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-size: 32px;
+    font-weight: 900;
+    margin-bottom: 25px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.qr-code-wrapper {
+    background: white;
+    border-radius: 20px;
+    padding: 25px;
+    margin: 25px 0;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    position: relative;
+}
+
+.qr-code-wrapper::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(135deg, #ff6b6b, #4ecdc4);
+    border-radius: 22px;
+    z-index: -1;
+    opacity: 0.1;
+}
+
+#qrcode {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+#qrcode canvas {
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.upi-icons {
+    margin: 25px 0;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 16px;
+    backdrop-filter: blur(10px);
+}
+
+.upi-icons img {
+    max-width: 220px;
+    height: auto;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.download-btn {
+    background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
+    color: white;
+    border: none;
+    padding: 16px 35px;
+    border-radius: 14px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    margin-top: 25px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 12px 25px rgba(68, 160, 141, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.download-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
+}
+
+.download-btn:hover::before {
+    left: 100%;
+}
+
+.download-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 18px 35px rgba(68, 160, 141, 0.4);
+}
+
+@media (max-width: 600px) {
+    .container {
+        padding: 30px 25px;
+        margin: 10px;
+    }
+    
+    h1 {
+        font-size: 26px;
+    }
+    
+    .logo {
+        width: 70px;
+        height: 70px;
+        font-size: 22px;
+    }
+    
+    .qr-container {
+        padding: 25px 20px;
+    }
+}
+
+.fade-in {
+    animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.scale-in {
+    animation: scaleIn 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes fadeInUp {
+    from { 
+        opacity: 0; 
+        transform: translateY(30px);
+    }
+    to { 
+        opacity: 1; 
+        transform: translateY(0);
+    }
+}
+
+@keyframes scaleIn {
+    from { 
+        opacity: 0; 
+        transform: scale(0.9);
+    }
+    to { 
+        opacity: 1; 
+        transform: scale(1);
+    }
+}
+
+.loading {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: #fff;
+    animation: spin 1s ease-in-out infinite;
+    margin-right: 10px;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.install-prompt {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(135deg, #ff6b6b 0%, #4ecdc4 100%);
+    color: white;
+    padding: 15px 25px;
+    border-radius: 50px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    display: none;
+    align-items: center;
+    gap: 15px;
+    z-index: 1000;
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    animation: slideUp 0.5s ease;
+}
+
+.install-prompt button {
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.install-prompt button:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(1.05);
+}
+
+.install-prompt .close-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    padding: 5px;
+}
+
+@keyframes slideUp {
+    from { transform: translateX(-50%) translateY(100px); opacity: 0; }
+    to { transform: translateX(-50%) translateY(0); opacity: 1; }
+}
+</style>
+
+<div class="container">
+    <div class="header">
+        <div class="logo">PM</div>
+        <h1>UPI QR Generator</h1>
+        <p class="subtitle">Generate professional UPI payment QR codes with premium design</p>
+    </div>
+    
+    <form id="qrForm">
+        <div class="form-group">
+            <label for="upiId">Select UPI ID:</label>
+            <select id="upiId" required>
+                <option value="">Choose UPI ID...</option>
+                <option value="createprincemahto-2@okaxis">createprincemahto-2@okaxis</option>
+                <option value="janik.m@ptyes">janik.m@ptyes</option>
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label for="amount">Amount (₹):</label>
+            <input type="number" id="amount" placeholder="Enter amount" min="1" step="0.01" required>
+        </div>
+        
+        <button type="submit" class="generate-btn" id="generateBtn">Generate QR Code</button>
+    </form>
+    
+    <div id="qrSection" class="qr-section">
+        <div class="qr-container" id="qrContainer">
+            <div class="qr-logo">PM</div>
+            <div class="qr-header">
+                <div class="merchant-name">Prince Mahto</div>
+                <div class="amount-display" id="displayAmount"></div>
+            </div>
+            <div class="qr-code-wrapper">
+                <div id="qrcode"></div>
+            </div>
+            <div class="upi-icons">
+                <img src="https://i.ibb.co/5gXKxmwj/upi-icons.png" alt="UPI Apps" onerror="this.style.display='none'">
+            </div>
+            <button class="download-btn" id="downloadBtn">Download QR Code</button>
+        </div>
+    </div>
+</div>
+
+<div class="install-prompt" id="installPrompt">
+    <span>📱 Install UPI QR Generator for quick access</span>
+    <button id="installBtn">Install</button>
+    <button class="close-btn" id="closePrompt">×</button>
+</div>
+
+<script>
+let deferredPrompt;
+const installPrompt = document.getElementById('installPrompt');
+const installBtn = document.getElementById('installBtn');
+const closePrompt = document.getElementById('closePrompt');
+
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js')
+            .then(registration => console.log('SW registered'))
+            .catch(error => console.log('SW registration failed'));
+    });
+}
+
+window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    installPrompt.style.display = 'flex';
+});
+
+installBtn.addEventListener('click', async () => {
+    if (deferredPrompt) {
+        deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice;
+        deferredPrompt = null;
+        installPrompt.style.display = 'none';
+    }
+});
+
+closePrompt.addEventListener('click', () => {
+    installPrompt.style.display = 'none';
+});
+
+window.addEventListener('appinstalled', () => {
+    installPrompt.style.display = 'none';
+});
+document.getElementById('qrForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const upiId = document.getElementById('upiId').value;
+    const amount = document.getElementById('amount').value;
+    const generateBtn = document.getElementById('generateBtn');
+    
+    if (!upiId || !amount) {
+        alert('Please fill in all fields');
+        return;
+    }
+    
+    generateBtn.innerHTML = '<span class="loading"></span>Generating...';
+    generateBtn.disabled = true;
+    
+    setTimeout(() => {
+        generateQRCode(upiId, amount);
+        generateBtn.innerHTML = 'Generate QR Code';
+        generateBtn.disabled = false;
+    }, 1000);
+});
+
+function generateQRCode(upiId, amount) {
+    const upiUrl = `upi://pay?pa=${upiId}&pn=Prince Mahto&am=${amount}&cu=INR`;
+    
+    document.getElementById('qrcode').innerHTML = '';
+    
+    try {
+        const qr = qrcode(0, 'M');
+        qr.addData(upiUrl);
+        qr.make();
+        
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        const size = 220;
+        canvas.width = size;
+        canvas.height = size;
+        
+        const moduleCount = qr.getModuleCount();
+        const cellSize = size / moduleCount;
+        
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(0, 0, size, size);
+        
+        ctx.fillStyle = '#1a202c';
+        for (let row = 0; row < moduleCount; row++) {
+            for (let col = 0; col < moduleCount; col++) {
+                if (qr.isDark(row, col)) {
+                    ctx.fillRect(col * cellSize, row * cellSize, cellSize, cellSize);
+                }
+            }
+        }
+        
+        document.getElementById('qrcode').appendChild(canvas);
+        document.getElementById('displayAmount').textContent = `₹${amount}`;
+        document.getElementById('qrSection').style.display = 'block';
+        document.getElementById('qrSection').classList.add('fade-in');
+        document.getElementById('qrContainer').classList.add('scale-in');
+        
+    } catch (error) {
+        console.error('QR Code generation failed:', error);
+        alert('Failed to generate QR code. Please try again.');
+    }
+}
+
+document.getElementById('downloadBtn').addEventListener('click', function() {
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = 500;
+    canvas.height = 700;
+    
+    const gradient1 = ctx.createLinearGradient(0, 0, canvas.width, 0);
+    gradient1.addColorStop(0, '#1e3c72');
+    gradient1.addColorStop(0.5, '#2a5298');
+    gradient1.addColorStop(1, '#667eea');
+    ctx.fillStyle = gradient1;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.95)';
+    ctx.fillRect(25, 25, canvas.width - 50, canvas.height - 50);
+    
+    const headerGradient = ctx.createLinearGradient(0, 25, canvas.width, 25);
+    headerGradient.addColorStop(0, '#ff6b6b');
+    headerGradient.addColorStop(1, '#4ecdc4');
+    ctx.fillStyle = headerGradient;
+    ctx.fillRect(25, 25, canvas.width - 50, 100);
+    
+    ctx.beginPath();
+    ctx.arc(250, 75, 35, 0, 2 * Math.PI);
+    ctx.fillStyle = headerGradient;
+    ctx.fill();
+    ctx.strokeStyle = 'white';
+    ctx.lineWidth = 4;
+    ctx.stroke();
+    
+    ctx.fillStyle = 'white';
+    ctx.font = 'bold 24px Inter, Arial';
+    ctx.textAlign = 'center';
+    ctx.fillText('PM', 250, 85);
+    
+    ctx.fillStyle = '#1a202c';
+    ctx.font = 'bold 28px Inter, Arial';
+    ctx.fillText('Prince Mahto', 250, 180);
+    
+    const amountGradient = ctx.createLinearGradient(200, 200, 300, 220);
+    amountGradient.addColorStop(0, '#4ecdc4');
+    amountGradient.addColorStop(1, '#44a08d');
+    ctx.fillStyle = amountGradient;
+    ctx.font = 'bold 36px Inter, Arial';
+    ctx.fillText(`₹${document.getElementById('amount').value}`, 250, 220);
+    
+    ctx.fillStyle = 'white';
+    ctx.fillRect(125, 250, 250, 250);
+    ctx.strokeStyle = 'rgba(0, 0, 0, 0.1)';
+    ctx.lineWidth = 2;
+    ctx.strokeRect(125, 250, 250, 250);
+    
+    const qrCanvas = document.querySelector('#qrcode canvas');
+    if (qrCanvas) {
+        ctx.drawImage(qrCanvas, 140, 265, 220, 220);
+    }
+    
+    ctx.fillStyle = '#718096';
+    ctx.font = '14px Inter, Arial';
+    ctx.fillText('Scan with any UPI app to pay', 250, 530);
+    
+    const upiIcon = new Image();
+    upiIcon.crossOrigin = 'anonymous';
+    upiIcon.onload = function() {
+        ctx.drawImage(upiIcon, 150, 550, 200, 50);
+        
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        
+        const link = document.createElement('a');
+        link.download = `Prince_Mahto_UPI_QR_${Date.now()}.png`;
+        link.href = canvas.toDataURL('image/png', 1.0);
+        
+        const downloadBtn = document.getElementById('downloadBtn');
+        downloadBtn.innerHTML = '<span class="loading"></span>Downloading...';
+        downloadBtn.disabled = true;
+        
+        setTimeout(() => {
+            link.click();
+            downloadBtn.innerHTML = 'Download QR Code';
+            downloadBtn.disabled = false;
+        }, 500);
+    };
+    upiIcon.onerror = function() {
+        const link = document.createElement('a');
+        link.download = `Prince_Mahto_UPI_QR_${Date.now()}.png`;
+        link.href = canvas.toDataURL('image/png', 1.0);
+        link.click();
+    };
+    upiIcon.src = 'https://i.ibb.co/5gXKxmwj/upi-icons.png';
+});
+</script>
